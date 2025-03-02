@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <section class="task-form">
+        <h1>Task Manager</h1>
+        <form action="">
+            <label for="task-name">Task Name</label>
+            <input type="text" id="task-name" placeholder="Enter Your Task Name">
+            <label for="task-des"></label>
+            <textarea name="" id="task-des" placeholder="Enter Description"></textarea>
+            <div class="section-1">
+                <input type="date" name="" id="task-date" placeholder="Due Date">
+                <select name="" id="select-task">
+                    <option value="">Select Category </option>
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="shopping">Shopping</option>
+                </select>
+            </div>
+            <button id="add-btn">Add Task</button>
+        </form>
+    </section>
+    <div class="filter-items">
+        <select id="filters">
+            <option value="Category">Category</option>
+            <option value="status">Status</option>
+            <option value="due-date">Due Date</option>
+        </select>
+   
+    </div>
+
+
+    <section class="task-table">
+           <table border="1">
+            <thead>
+                <tr>
+                    <td>Task Name</td>
+                    <td>Task Description</td>
+                    <td>Due date</td>
+                    <td>Category</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+           </table>
+    </section>
+
+</body>
+</html>
+<script>
+    let data=[];
+    let addBtn=document.getElementById("add-btn");
+    addBtn.addEventListener("click",(event)=>{
+        event.preventDefault();
+        addData();
+    });
+   function addData(){
+           
+         let taskName=document.getElementById("task-name").value;
+         let taskDes=document.getElementById("task-des").value;
+         let taskDate=document.getElementById("task-date").value;
+         let selectTask=document.getElementById("select-task").value;
+         let  table=document.querySelector("table tbody");
+        //  table.innerHTML+=`
+        //       <tr>
+        //             <td>${taskName}/td>
+        //             <td>${taskDes}</td>
+        //             <td>${taskDate}</td>
+        //             <td>${selectTask}</td>
+        //             <td><input type="checkbox" name="" value="" id="task-status">Completed</td>
+        //         </tr>
+        //  `;
+        let obj={
+            taskName:taskName,
+            taskDes:taskDes,
+            taskDate:taskDate,
+            selectTask:selectTask
+        }
+         data.push(obj);
+         localStorage.setItem("task",JSON.stringify(data));
+
+       
+
+          display();
+   }
+   function display(){
+    let table=document.querySelector("table tbody");
+          let task=JSON.parse(localStorage.getItem("task"));
+          console.log(task);
+          task.forEach((item)=>{
+            table.innerHTML+=`
+              <tr>
+                    <td>${item.taskName}/td>
+                    <td>${item.taskDes}</td>
+                    <td>${item.taskDate}</td>
+                    <td>${item.selectTask}</td>
+                    <td><input type="checkbox" name="" value="" id="task-status">Completed</td>
+                </tr>
+         `;
+
+          })
+          let taskStatus=document.getElementById("task-status");
+          taskStatus.addEventListener("click",(event)=>{
+              if(event.target.checked){
+                  event.target.parentElement.parentElement.style.textDecoration="line-through";
+                  taskStatus.value="completed";
+
+              }else{
+                  event.target.parentElement.parentElement.style.textDecoration="none";
+                    taskStatus.value="pending";
+              }
+              
+          });
+   }
+
+   
+   display();
+
+
+
+
+</script>

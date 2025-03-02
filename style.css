@@ -1,0 +1,106 @@
+
+*{
+    padding: 0;
+    margin:0;
+}
+.task-form{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 50%;
+    margin:10px auto;
+    padding: 20px;
+    background-color: antiquewhite;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    font-size: large;
+
+}
+form>input,textarea,#select-task,#task-date{
+    padding: 10px 10px;
+    width: 100%;
+    border: 1px solid black;
+    color: black;
+    background-color: aliceblue;
+}
+.section-1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+
+}
+#add-btn{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+
+}
+.task-table{
+    width: 100%;
+    margin:10px auto;
+
+
+}
+table{
+    border: 1px solid black;
+    width: 100%;
+}
+table>tbody,table>thead{
+    border: 1px solid black;
+    padding: 30px 30px;
+
+    text-align: center;
+    
+}
+table>thead>tr>td{
+    border: 1px solid black;
+    font-weight: bold;
+    padding: 10px;
+
+}
+table>tbody>tr>td{
+    border: 1px solid black;
+
+    padding: 10px;
+}
+
+.filter-items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.filter-items>select{
+    padding: 10px 30px;
+    border: 1px solid black;
+    color: black;
+    background-color: aliceblue;
+}
+@media only screen and (max-width:400px) and (min-width:780px) {
+    .section-1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    }
+
+
+}
+
+
