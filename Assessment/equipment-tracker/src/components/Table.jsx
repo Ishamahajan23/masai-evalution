@@ -29,7 +29,7 @@ const Table = ({
                 onChange={(e) => handleSearch(e.target.value)}
                 />
             <button
-                className="w-full sm:w-auto px-4 py-1 bg-blue-50 border border-blue-500 text-blue-500 rounded hover:bg-blue-100"
+                className="w-full sm:w-auto px-4 py-1 bg-blue-50 border cursor-pointer border-blue-500 text-blue-500 rounded hover:bg-blue-100"
                 onClick={addFormOnClick}
                 >
                 Add
