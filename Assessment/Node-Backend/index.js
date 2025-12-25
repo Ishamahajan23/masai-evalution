@@ -16,6 +16,11 @@ const startServer = async () => {
     app.use(express.json());
     app.use('/api/lists', listRouter);
 
+    // Health check endpoint
+    app.get('/health', (req, res) => {
+        res.status(200).json({ status: 'OK', message: 'Server is running' });
+    });
+
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
