@@ -133,7 +133,7 @@ const AddeditList = () => {
                 setEditLoading(false);
                 setaddLoading(false);
                 try{
-                    await fetch(`http://localhost:8000/api/lists/${item._id}`, {
+                    await fetch(`${import.meta.env.VITE_API_URL}/api/lists/${item._id}`, {
                         method: "DELETE",
                     });
                     toast.success("Equipment deleted successfully!");
