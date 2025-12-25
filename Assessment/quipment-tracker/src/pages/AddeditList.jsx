@@ -34,6 +34,12 @@ const AddeditList = () => {
     const handleSubmit = async () => {
         try{
             setLoading(true);
+            if(!formData.name || !formData.type || !formData.status || !formData.lastCleanedDate){
+                toast.error("All fields are required.");
+                setLoading(false);
+                return;
+            }
+            
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/lists`, {
                 method: "POST",
                 headers: {
@@ -71,8 +77,8 @@ const AddeditList = () => {
                 toast.error("All fields are required.");
                 return;
             }
-        
-            const res = await fetch(`http://localhost:8000/api/lists/${formData._id}`, {
+
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/lists/${formData._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
