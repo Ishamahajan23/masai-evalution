@@ -66,8 +66,7 @@ const AddeditList = () => {
     }
 
 
-    const handleEdit = async (e) => {
-        e.preventDefault();
+    const handleEdit = async () => {
         try{
             if(!formData._id){
                 toast.error("Invalid equipment ID for editing.");
