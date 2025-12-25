@@ -14,27 +14,33 @@ const Table = ({
         setData(filteredData);
     }
   return (
-    <div className=' p-4 bg-white rounded-xl overflow-x-auto shadow-md m-4'>
-           <div className='border  border-b-0 border-gray-300 p-2 bg-sky-50 flex items-center justify-between rounded-t-xl'>
-             
-            <div className='text-xl font-semibold bg-sky-50 text-sky-900'>
+    <div className=' bg-white rounded-xl shadow-md m-4 '>
+          <div className="border border-b-0 border-gray-300 p-3 bg-sky-50 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between rounded-t-xl">
+              
+            <div className='lg:text-xl font-semibold bg-sky-50 text-sky-900'>
                 {headerName}
             </div>
-            <div className='flex items-center gap-2'>
-             <input type="search" placeholder="Search by type..." className="ml-4 px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" disabled={rowData.length===0}
-             
-             onChange={(e) => handleSearch(e.target.value)}/>
-            <button className='ml-auto px-4 py-1 bg-blue-50 border border-blue-500 text-blue-500 rounded hover:bg-blue-100 cursor-pointer'
-             onClick={addFormOnClick}
-            >
+         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+             <input
+                type="search"
+                placeholder="Search by type..."
+                className="w-full sm:w-auto px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled={rowData.length === 0}
+                onChange={(e) => handleSearch(e.target.value)}
+                />
+            <button
+                className="w-full sm:w-auto px-4 py-1 bg-blue-50 border border-blue-500 text-blue-500 rounded hover:bg-blue-100"
+                onClick={addFormOnClick}
+                >
                 Add
-            </button>
+                </button>
 
             </div>
 
            </div>
        
-             <table className='w-full border-collapse border border-gray-300 overflow-x-auto'>
+            <div className="w-full overflow-x-auto">
+              <table className="sm:min-w-175 w-full border-collapse border border-gray-300">
                     <thead>
                         <tr className='bg-gray-100'>
                             {
@@ -53,6 +59,7 @@ const Table = ({
                                             <td key={col.id} className='border border-gray-300 text-md p-2'>
                                                 {
                                                     col.id === "actions" ? (
+                                                      <div className="flex flex-wrap gap-2">{
                                                         row.actions.map((action, index) => (
                                                             <button
                                                                 key={index}
@@ -62,6 +69,7 @@ const Table = ({
                                                                 {action.label}
                                                             </button>
                                                         ))
+                                                    }</div>
                                                     ) : (
                                                         row[col.id]
                                                     )
@@ -84,7 +92,7 @@ const Table = ({
                          }
                     </tbody>
                 </table>
-
+            </div>
     </div>
   )
 }
