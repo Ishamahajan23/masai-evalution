@@ -24,7 +24,7 @@ const Table = ({
              <input type="search" placeholder="Search by type..." className="ml-4 px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" disabled={rowData.length===0}
              
              onChange={(e) => handleSearch(e.target.value)}/>
-            <button className='ml-auto px-4 py-1 bg-blue-50 border border-blue-500 text-blue-500 rounded hover:bg-blue-100'
+            <button className='ml-auto px-4 py-1 bg-blue-50 border border-blue-500 text-blue-500 rounded hover:bg-blue-100 cursor-pointer'
              onClick={addFormOnClick}
             >
                 Add
@@ -57,7 +57,7 @@ const Table = ({
                                                             <button
                                                                 key={index}
                                                                 onClick={action.event}
-                                                                className={`mr-2 px-3 py-1 rounded  ${action.type === "edit" ? "bg-blue-50 border border-blue-500 text-blue-500" : "bg-red-50 text-red-500 border border-red-500"}`}
+                                                                className={`mr-2 px-3 py-1 rounded cursor-pointer  ${action.type === "edit" ? "bg-blue-50 border border-blue-500 text-blue-500" : "bg-red-50 text-red-500 border border-red-500"}`}
                                                             >
                                                                 {action.label}
                                                             </button>

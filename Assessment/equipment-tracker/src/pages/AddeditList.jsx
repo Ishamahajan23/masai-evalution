@@ -66,7 +66,8 @@ const AddeditList = () => {
     }
 
 
-    const handleEdit = async () => {
+    const handleEdit = async (e) => {
+        e.preventDefault();
         try{
             if(!formData._id){
                 toast.error("Invalid equipment ID for editing.");
@@ -213,7 +214,7 @@ const AddeditList = () => {
                     [name]: value
                 });
               })}
-              onSubmit ={() => handleEdit()}
+              onSubmit ={(e) => handleEdit(e)}
               formData={formData}
               setFormData={setFormData}
               headerName="Edit Equipment"
