@@ -27,6 +27,10 @@ async function editEquipment(req, res){
 async function getEquipments(req, res){
     try{
         const equipments = await Equipment.find();
+        if (!equipments.length) {
+        return res.status(200).json({ message: "No equipments found", equipments: [] });
+        }
+
         return res.status(200).json({
             message: "Equipments fetched successfully",
             equipments: equipments
