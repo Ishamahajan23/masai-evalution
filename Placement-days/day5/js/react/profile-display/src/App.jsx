@@ -1,15 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import './App.css'
-
-// ### Question 1: User Profile Loader
-
-// **Topic Focus:** `useEffect` for API calls
-// **Scenario:** Fetch and display a user profile on component mount. Show loading spinner while fetching. Display error message if fetch fails. Include a "Retry" button that appears on error.
-// **Hidden Test:** Handling loading/error states, cleanup for unmounted components
-
-// **Mock API:** Use `https://jsonplaceholder.typicode.com/users/1`
-
 function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
