@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { User, Appointment, SupportTicket } = require('../model/hospital.model');
 
-const bookAppointment = (async (req, res) => {
+const bookAppointment = async (req, res) => {
   const { doctorId, appointmentDate, symptoms } = req.body;
   const patientId = req.user.id;
 
@@ -67,9 +67,9 @@ const bookAppointment = (async (req, res) => {
   } finally {
     session.endSession();
   }
-});
+};
 
-const getMyAppointments = (async (req, res) => {
+const getMyAppointments = async (req, res) => {
   const { status, page = 1, limit = 10 } = req.query;
   const query = { patientId: req.user.id };
   
@@ -98,10 +98,10 @@ const getMyAppointments = (async (req, res) => {
       }
     }
   });
-});
+};
 
 // Cancel appointment
-const cancelAppointment = (async (req, res) => {
+const cancelAppointment = async (req, res) => {
   const { appointmentId } = req.params;
 
   const appointment = await Appointment.findOne({
@@ -155,10 +155,10 @@ const cancelAppointment = (async (req, res) => {
   } finally {
     session.endSession();
   }
-});
+};
 
 // Raise support ticket
-const raiseSupportTicket = (async (req, res) => {
+const raiseSupportTicket = async (req, res) => {
   const { title, description, priority = 'medium' } = req.body;
 
   if (!title || !description) {
@@ -183,10 +183,10 @@ const raiseSupportTicket = (async (req, res) => {
     message: 'Support ticket created successfully',
     data: { ticket: populatedTicket }
   });
-});
+};
 
 // Get patient's support tickets
-const getMySupportTickets = (async (req, res) => {
+const getMySupportTickets =     async (req, res) => {
   const { status, priority, page = 1, limit = 10 } = req.query;
   const query = { patientId: req.user.id };
 
@@ -214,7 +214,7 @@ const getMySupportTickets = (async (req, res) => {
       }
     }
   });
-});
+};
 
 module.exports = {
   bookAppointment,
