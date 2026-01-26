@@ -2,70 +2,92 @@ const mongoose = require('mongoose');
 const { User, Appointment, SupportTicket } = require('../model/hospital.model');
 
 const bookAppointment = async (req, res) => {
-  const { doctorId, appointmentDate, symptoms } = req.body;
-  const patientId = req.user.id;
-
-  // Validation
-  if (!doctorId || !appointmentDate || !symptoms) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please provide all required fields'
-    });
-  }
-
-  // Validate appointment time
-  if (!(appointmentDate)) {
-    return res.status(400).json({
-      success: false,
-      error: 'Appointment must be in the future and within business hours (9 AM - 5 PM)'
-    });
-  }
-
-  // Check if doctor exists and is active
-  const doctor = await User.findOne({ 
-    _id: doctorId, 
-    role: 'doctor', 
-    isActive: true 
-  });
-  
-  if (!doctor) {
-    return res.status(404).json({
-      success: false,
-      error: 'Doctor not found or inactive'
-    });
-  }
-
-  // Start transaction
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
-    // Create appointment
-    const appointment = await Appointment.create([{
-      patientId,
-      doctorId,
-      appointmentDate,
-      symptoms
-    }], { session });
+    const { doctorId, appointmentDate, symptoms } = req.body;
+    const patientId = req.user.id;
 
-    await session.commitTransaction();
+    // Validation
+    if (!doctorId || !appointmentDate || !symptoms) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please provide all required fields (doctorId, appointmentDate, symptoms)'
+      });
+    }
 
-    // Populate appointment data
-    const populatedAppointment = await Appointment.findById(appointment[0]._id)
-      .populate('patientId', 'name email')
-      .populate('doctorId', 'name specialization');
+    // Validate appointment date
+    const appointmentDateTime = new Date(appointmentDate);
+    const now = new Date();
+    
+    // Check if date is valid
+    if (isNaN(appointmentDateTime.getTime())) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please provide a valid appointment date'
+      });
+    }
+    
+    // Check if appointment is in the future
+    if (appointmentDateTime <= now) {
+      return res.status(400).json({
+        success: false,
+        error: 'Appointment must be in the future'
+      });
+    }
+    
+   
 
-    res.status(201).json({
-      success: true,
-      message: 'Appointment booked successfully',
-      data: { appointment: populatedAppointment }
+    // Check if doctor exists and is active
+    const doctor = await User.findOne({ 
+      _id: doctorId, 
+      role: 'doctor', 
+      isActive: true 
     });
+    
+    if (!doctor) {
+      return res.status(404).json({
+        success: false,
+        error: 'Doctor not found or inactive'
+      });
+    }
 
+    // Start transaction
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      // Create appointment
+      const appointment = await Appointment.create([{
+        patientId,
+        doctorId,
+        appointmentDate: appointmentDateTime,
+        symptoms
+      }], { session });
+
+      await session.commitTransaction();
+
+      // Populate appointment data
+      const populatedAppointment = await Appointment.findById(appointment[0]._id)
+        .populate('patientId', 'name email')
+        .populate('doctorId', 'name specialization');
+
+      res.status(201).json({
+        success: true,
+        message: 'Appointment booked successfully',
+        data: { appointment: populatedAppointment }
+      });
+
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   } catch (error) {
-    await session.abortTransaction();
-    throw error;
-  } finally {
-    session.endSession();
+    console.error('Book appointment error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Server error while booking appointment'
+    });
   }
 };
 
