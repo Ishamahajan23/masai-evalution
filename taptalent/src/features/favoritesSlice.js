@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Load favorites from localStorage
 const loadFavoritesFromStorage = () => {
   try {
     const storedFavorites = localStorage.getItem('weatherFavorites');
-    return storedFavorites ? JSON.parse(storedFavorites) : ['india'];
+    return storedFavorites ? JSON.parse(storedFavorites) : ['mumbai'];
   } catch (error) {
-    return ['india'];
+    return ['mumbai'];
   }
 };
 

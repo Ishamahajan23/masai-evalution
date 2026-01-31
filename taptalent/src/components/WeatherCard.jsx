@@ -33,64 +33,82 @@ const WeatherCard = ({ city, weatherData, isFavorite = false }) => {
   const weatherCondition = weather[0];
 
   return (
-    <Link to={`/city/${encodeURIComponent(city)}`} className="block">
-      <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
-        <div className="p-6">
-          <div className="flex justify-between items-start mb-4">
+    <Link to={`/city/${encodeURIComponent(city)}`} className="block group">
+      <div className="backdrop-blur-md bg-gradient-to-br from-white/20 to-white/10 border border-white/30 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform group-hover:-translate-y-2 overflow-hidden">
+        <div className="p-8">
+          <div className="flex justify-between items-start mb-6">
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-1">{city}</h3>
-              <p className="text-gray-500 text-sm capitalize">{weatherCondition.description}</p>
+              <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">{city}</h3>
+              <p className="text-white/80 text-sm capitalize bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                {weatherCondition.description}
+              </p>
             </div>
             <button
               onClick={handleFavoriteToggle}
-              className={`p-2 rounded-full transition-colors ${
+              className={`p-3 rounded-full transition-all duration-300 backdrop-blur-sm hover:scale-110 ${
                 isFavorite 
-                  ? 'text-red-500 hover:bg-red-50' 
-                  : 'text-gray-400 hover:text-red-500 hover:bg-gray-50'
+                  ? 'bg-red-500/30 text-red-200 hover:bg-red-500/50 shadow-lg' 
+                  : 'bg-white/20 text-white/60 hover:text-red-300 hover:bg-red-500/30'
               }`}
               title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
-              {isFavorite ? '❤️' : '🤍'}
+              <span className="text-xl">{isFavorite ? '❤️' : '🤍'}</span>
             </button>
           </div>
 
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <span className="text-4xl mr-3">
+          <div className="flex items-center justify-center mb-8">
+            <div className="text-center">
+              <div className="text-7xl mb-4 animate-pulse">
                 {getWeatherIcon(weatherCondition.icon)}
-              </span>
-              <div>
-                <span className="text-3xl font-bold text-gray-800">
-                  {formatTemperature(main.temp, temperatureUnit)}°
+              </div>
+              <div className="flex items-baseline justify-center">
+                <span className="text-5xl font-bold text-white drop-shadow-lg">
+                  {formatTemperature(main.temp, temperatureUnit)}
                 </span>
-                <span className="text-lg text-gray-500">{temperatureUnit}</span>
+                <span className="text-2xl text-white/80 ml-1">°{temperatureUnit}</span>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
-            <div className="flex items-center">
-              <span className="mr-2">🌡️</span>
-              <span>Feels like {formatTemperature(main.feels_like, temperatureUnit)}°</span>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="backdrop-blur-sm bg-white/10 rounded-2xl p-4 border border-white/20">
+              <div className="flex items-center mb-2">
+                <span className="text-2xl mr-3">🌡️</span>
+                <span className="text-white/80 text-sm">Feels like</span>
+              </div>
+              <span className="text-white font-semibold text-lg">
+                {formatTemperature(main.feels_like, temperatureUnit)}°
+              </span>
             </div>
-            <div className="flex items-center">
-              <span className="mr-2">💧</span>
-              <span>Humidity {main.humidity}%</span>
+            <div className="backdrop-blur-sm bg-white/10 rounded-2xl p-4 border border-white/20">
+              <div className="flex items-center mb-2">
+                <span className="text-2xl mr-3">💧</span>
+                <span className="text-white/80 text-sm">Humidity</span>
+              </div>
+              <span className="text-white font-semibold text-lg">{main.humidity}%</span>
             </div>
-            <div className="flex items-center">
-              <span className="mr-2">💨</span>
-              <span>Wind {wind.speed} m/s</span>
+            <div className="backdrop-blur-sm bg-white/10 rounded-2xl p-4 border border-white/20">
+              <div className="flex items-center mb-2">
+                <span className="text-2xl mr-3">💨</span>
+                <span className="text-white/80 text-sm">Wind</span>
+              </div>
+              <span className="text-white font-semibold text-lg">{wind.speed} m/s</span>
             </div>
-            <div className="flex items-center">
-              <span className="mr-2">⏰</span>
-              <span>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+            <div className="backdrop-blur-sm bg-white/10 rounded-2xl p-4 border border-white/20">
+              <div className="flex items-center mb-2">
+                <span className="text-2xl mr-3">⏰</span>
+                <span className="text-white/80 text-sm">Updated</span>
+              </div>
+              <span className="text-white font-semibold text-lg">
+                {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-3">
-          <p className="text-xs text-gray-600 text-center">
-            Click for detailed forecast →
+        <div className="bg-gradient-to-r from-blue-500/30 to-purple-500/30 backdrop-blur-sm px-8 py-4 border-t border-white/20">
+          <p className="text-white/90 text-center font-medium group-hover:text-white transition-colors duration-300">
+            Tap for detailed forecast →
           </p>
         </div>
       </div>

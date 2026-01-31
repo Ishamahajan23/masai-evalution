@@ -84,11 +84,11 @@ const CityDetails = () => {
 
   if (status === 'loading' || !cityWeatherData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-7xl mx-auto pt-8">
-          <div className="text-center">
-            <div className="animate-spin w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading detailed weather data for {decodedCityName}...</p>
+          <div className="text-center backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20">
+            <div className="animate-spin w-12 h-12 border-4 border-white/50 border-t-white rounded-full mx-auto mb-4"></div>
+            <p className="text-white text-lg">Loading detailed weather data for {decodedCityName}...</p>
           </div>
         </div>
       </div>
@@ -97,14 +97,14 @@ const CityDetails = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-7xl mx-auto pt-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <h2 className="text-xl font-bold text-red-800 mb-2">Error Loading Data</h2>
-            <p className="text-red-600 mb-4">{error}</p>
+          <div className="backdrop-blur-md bg-red-500/20 border border-red-400/30 rounded-2xl p-6 text-center">
+            <h2 className="text-xl font-bold text-white mb-2">Error Loading Data</h2>
+            <p className="text-red-200 mb-4">{error}</p>
             <button
               onClick={() => navigate('/')}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-6 py-3 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-all duration-300 backdrop-blur-sm border border-white/30"
             >
               Back to Dashboard
             </button>
@@ -118,79 +118,76 @@ const CityDetails = () => {
   const { hourly, daily } = formatChartData();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <Link
               to="/"
-              className="inline-flex items-center px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="inline-flex items-center px-6 py-3 backdrop-blur-md bg-white/20 text-white rounded-2xl hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg"
             >
               ← Back to Dashboard
             </Link>
-            <h1 className="text-3xl font-bold text-gray-800">{decodedCityName}</h1>
+            <h1 className="text-4xl font-bold text-white drop-shadow-lg">{decodedCityName}</h1>
           </div>
           <button
             onClick={handleFavoriteToggle}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            className={`px-6 py-3 rounded-2xl font-medium transition-all duration-300 backdrop-blur-md border shadow-lg ${
               isFavorite
-                ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-red-500/30 text-white border-red-400/50 hover:bg-red-500/40'
+                : 'bg-white/20 text-white border-white/30 hover:bg-white/30'
             }`}
           >
             {isFavorite ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}
           </button>
         </div>
 
-        {/* Current Weather Card */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <div className="backdrop-blur-md bg-white/10 rounded-3xl shadow-2xl p-8 mb-8 border border-white/20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start mb-4">
-                <span className="text-6xl mr-4">
+                <span className="text-7xl mr-6 animate-pulse">
                   {getWeatherIcon(currentWeather.weather[0].icon)}
                 </span>
                 <div>
-                  <div className="text-5xl font-bold text-gray-800">
+                  <div className="text-6xl font-bold text-white drop-shadow-lg">
                     {formatTemperature(currentWeather.temp, temperatureUnit)}°{temperatureUnit}
                   </div>
-                  <div className="text-lg text-gray-600 capitalize">
+                  <div className="text-xl text-white/80 capitalize mt-2 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
                     {currentWeather.weather[0].description}
                   </div>
                 </div>
               </div>
-              <div className="text-lg text-gray-600">
+              <div className="text-xl text-white/90 font-medium">
                 Feels like {formatTemperature(currentWeather.feels_like, temperatureUnit)}°{temperatureUnit}
               </div>
             </div>
             
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-blue-50 rounded-lg p-4 text-center">
-                <div className="text-2xl mb-2">💧</div>
-                <div className="text-sm text-gray-600">Humidity</div>
-                <div className="text-xl font-bold">{currentWeather.humidity}%</div>
+              <div className="backdrop-blur-sm bg-blue-500/20 rounded-2xl p-6 text-center border border-blue-400/30">
+                <div className="text-3xl mb-3">💧</div>
+                <div className="text-sm text-white/80 mb-1">Humidity</div>
+                <div className="text-2xl font-bold text-white">{currentWeather.humidity}%</div>
               </div>
-              <div className="bg-green-50 rounded-lg p-4 text-center">
-                <div className="text-2xl mb-2">💨</div>
-                <div className="text-sm text-gray-600">Wind Speed</div>
-                <div className="text-xl font-bold">{currentWeather.wind_speed} m/s</div>
+              <div className="backdrop-blur-sm bg-green-500/20 rounded-2xl p-6 text-center border border-green-400/30">
+                <div className="text-3xl mb-3">💨</div>
+                <div className="text-sm text-white/80 mb-1">Wind Speed</div>
+                <div className="text-2xl font-bold text-white">{currentWeather.wind_speed} m/s</div>
               </div>
-              <div className="bg-yellow-50 rounded-lg p-4 text-center">
-                <div className="text-2xl mb-2">👁️</div>
-                <div className="text-sm text-gray-600">Visibility</div>
-                <div className="text-xl font-bold">{currentWeather.visibility / 1000} km</div>
+              <div className="backdrop-blur-sm bg-yellow-500/20 rounded-2xl p-6 text-center border border-yellow-400/30">
+                <div className="text-3xl mb-3">👁️</div>
+                <div className="text-sm text-white/80 mb-1">Visibility</div>
+                <div className="text-2xl font-bold text-white">{currentWeather.visibility / 1000} km</div>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4 text-center">
-                <div className="text-2xl mb-2">🌡️</div>
-                <div className="text-sm text-gray-600">UV Index</div>
-                <div className="text-xl font-bold">{currentWeather.uvi}</div>
+              <div className="backdrop-blur-sm bg-purple-500/20 rounded-2xl p-6 text-center border border-purple-400/30">
+                <div className="text-3xl mb-3">🌡️</div>
+                <div className="text-sm text-white/80 mb-1">UV Index</div>
+                <div className="text-2xl font-bold text-white">{currentWeather.uvi}</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Charts Section */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h3 className="text-xl font-bold text-gray-800 mb-4">24-Hour Temperature Trend</h3>
